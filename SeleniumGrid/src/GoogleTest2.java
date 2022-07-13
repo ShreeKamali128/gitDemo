@@ -1,6 +1,7 @@
 import java.net.MalformedURLException;
 import java.net.URL;
 
+import org.openqa.selenium.By;
 import org.openqa.selenium.Platform;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.remote.CapabilityType;
@@ -21,6 +22,8 @@ public class GoogleTest2 {
 	 
 	    WebDriver driver= new RemoteWebDriver(new URL("http://localhost:4444"),dc);
 	    driver.get("https://www.rahulshettyacademy.com");
+	    driver.findElement(By.linkText("Courses")).click();
+	    
 	}
 
 }
