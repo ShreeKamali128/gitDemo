@@ -1,0 +1,74 @@
+Scenario and Scenario outline:
+
+Outline takes user data in a table format
+and 
+runs the same scenario for multiple times with diffferent combo of data
+
+ArrayList and Set:
+
+
+List					Set
+duplicate elements			unique elements
+many null values			only one null value
+dynamic size				fixed size
+elements in insertion order		random order
+
+
+Arraylist:
+ascending order ----sort()
+remove element-------remove(index) or remove using iterator
+
+Regression and Retesting:
+both involves continuous testing
+Regression:				Retesting:  	
+searching the defects			fixing the defects
+for passed TCs				for failed TCs
+check if any changes done		ensure the TCs that failed earlier are fixed
+doesnt affect the unchanged code
+
+
+
+
+
+
+Hashmap and Linkedhashmap:
+HashMap:							LinkedHash map:
+key-value pairs							key-value pairs
+no duplicate keys possible					no duplicate keys possible
+one null key and many null value possible		        one null key and many null value possible
+not synchronized						not synchronized
+extends abstract map						extends hashmap
+low memory used						 	uses double linked list so more memory
+								alternative to hash map ...
+								all properties and methods of hashmap here also....
+								additionally, maintain insertion ordr of elements
+
+
+
+Explicit and Fluentwait
+-----------------------------------------------------------------------------------------------------------
+List       	  Set			Map
+Arraylist	HashSet			HashMap(has a method entryset to convert to set)
+LinkedList	LinkedHashSet		LinkedHashMap
+Vector		TreeSet			TreeMap
+
+add		add<Integer>		put<Integer, Integer>
+get		get			get
+
+					Hashmap 		HashTable:
+Synchronized and thread safe:   not synchronized		synchronized
+				no thread safe 			thread safe
+not null key and value:		one null key 			no  null key and value
+				many null values
+iteration			iterator used			enumerator used
+
+------------------------------------------------------------------------------------------------------------------	
+Exception got in selenium webdriver:
+
+2. element click intercepted
+3. element not interactable
+1. timeout
+7. session not created
+4. no such element
+5. no such attribute
+6. no such window
