@@ -12,13 +12,15 @@ public class Demo2 {
 		log.error("button not clicked");
 		log.fatal("button not visible");
 		
-		log.debug("button is clicked");
-		log.info("button click success");
-		log.error("button not clicked");
-		log.fatal("button not visible");
-		
-		System.out.println("GitX gonna push");
-		
+//		log.debug("button is clicked");
+//		log.info("button click success");
+//		log.error("button not clicked");
+//		log.fatal("button not visible");
+//		
+//
+//		System.out.println("GitX gonna push");
+//		System.out.println("GitX push lastly");
+
 	}
 
 }
