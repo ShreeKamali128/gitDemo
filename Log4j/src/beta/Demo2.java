@@ -12,6 +12,11 @@ public class Demo2 {
 		log.error("button not clicked");
 		log.fatal("button not visible");
 		
+		log.debug("button is clicked");
+		log.info("button click success");
+		log.error("button not clicked");
+		log.fatal("button not visible");
+		
 	}
 
 }
