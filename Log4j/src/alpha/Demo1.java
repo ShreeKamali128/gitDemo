@@ -18,7 +18,7 @@ public class Demo1 {
 		log.error("button not clicked");
 		log.fatal("button not visible");
 		
-		System.out.println("gitX ppush lastly...");
+		System.out.println("gitX push lastly...");
 	}
   
 }
