@@ -1,0 +1,543 @@
+
+COLLECTIONS:
+-----------------
+Iterable(I) <-- Collection
+			List
+			Set <-----SortedSet
+			Map
+			Queue-<----Dequeue
+---------------------------------------------------------------
+(I)--- Interface
+List(I):       	   Queue(I):			      Set(I):			      Map(I):
+ Arraylist 		   Priority queue		      HashSet		              HashMap(has a entrySet meth to convert to set)
+ LinkedList	   Dequeue(I):			 	      LinkedHashSet	              LinkedHashMap
+ Vector	    		   ArrayDequeue		SortedSet(I): TreeSet		SortedMap(I): TreeMap
+   Stack
+===================================================================================================================================================
+
+Array:						ArrayList:
+
+its an object					a class
+
+initialize: yes while creating			no need	
+size: fixed/static				varied/dynamic
+resizable: fixed				variable				
+performance: fast cz fixed size			slow	
+size: length					size()
+
+addition: assignmnt operator			add() mehtod	
+iteration: for/for each loop			iterator
+multi dimensional				single dimensional
+
+----------------------------------------------------------------------------------
+ 
+Araylist				Linkedlist
+
+small items				large items
+less memeory				DLL so more memory
+access: sequential or random		access: sequential		
+overall manipulations: better 		overall manipulations: faster 
+element: object				element: data and a link
+implements: List			implements: List and DeQueue
+best for: searching elements		bestfor: add/remove elements
+
+use dynamic array to store		use DLL to store
+manipulations slow cz of 		manipulations faster cz no bit shifting
+bit shifting
+this class act as a List		this class act as list and Queue, stack
+better for store nd access		better for manipulating
+
+----------------------------------------------------------------------------------------------
+
+ArrayList						Set(unordered set of elements):
+
+implements List						implements Collection
+duplicate elements(diff data types)			unique elements
+many null values					only one null value
+dynamic size array					fixed size
+elements add: insertion order				random order
+elements access:random	cz arr is index basis					
+not synchronized					not synchronized
+
+---------------------------------------------------------------------------------
+HashMap:							LinkedHash map:
+
+key-value pairs							key-value pairs
+no duplicate keys possible					no duplicate keys possible
+one null key and many null value possible		        one null key and many null value possible
+access: not synchronized					not synchronized
+
+extends abstract map						extends hashmap
+low memory used						 	uses double linked list so more memory
+								alternative to hash map ...
+								all properties and methods of hashmap here also....
+								additionally, maintain insertion ordr of elements
+
+---------------------------------------------------------------------------------------------------------
+Hash Map:					HashSet:
+
+key-value pair					objects
+
+no duplicate key but				no duplicate values
+duplicate values				
+
+single null key					
+many null values				single null value
+
+put						add
+faster						slower
+two objects: key/value				one object					
+-----------------------------------------------------------------------------------------------------------
+
+					Hashmap 		HashTable:
+Synchronized and 		not synchronized		synchronized
+thread safe			no thread safe 			thread safe
+performance			fast				slow
+
+
+iteration			iterator used			enumerator used
+extends				abstractMap			dictionary
+fails				fail-fast			fail-slow
+null key and value		one null key 			no  null key and value
+				many null values
+----------------------------------------------------------------------------------------------------------
+
+
+difference b/w:
+===============
+1. a collection and its data structure	(hashmap-hashtable)
+2. two different collection (list-set-queue-map)
+3. two same collections	(hashset-treeset-linkedhashset)
+
+
+HASH MAP VS HASH TABLE:	[AEFN]
+-------------------------------------------------------------------------------------------------------------
+Thread safe		no 				yes
+Synchronized		no				yes
+Performance		faster				slower
+Alternative		ConcurrentHashMap		no
+Extends			AbstractMap			Dictionary Class
+			Iterator			Enumerator
+Fail fast		so fail fast			so no fail fast
+Null values		one null key/no null value	no null key/value
+
+
+TWO COLLECTIONS DIFFERENCE:
+-------------------------------------------------------------------------------------------------------------------------
+duplicate elements
+null values
+order
+access
+implements
+
+
+
+HASH SET VS TREE SET:
+-----------------------------------------------------------------------------------------------------------------
+SIMILARITIES:
+=============
+		unique elements
+Thread safety:	no thread safe, 
+Synchronized:	no synchronized    use Collections.synchronizedSet() method
+Implements:	implements set interface
+Fail-fast:	Iterator of both classes fail-fast in nature.
+
+DIFFERENCES:
+============
+Performance			 faster 		slower				
+Null Object			 yes allowed		not allowed
+							bcz compareTo method() used
+
+underlying Data Structure	 hash table		tree
+Internal Implementation using	
+/backed by			 hash map		tree map
+
+compare 2 objects or		
+Detect Duplicates		equals()used		compareTo() used
+and return			  true				zero
+
+Ordering			no order		maintains objects in 	
+							Sorted Order(either asc or desc)
+							defined by Comparable or Comparator method
+
+=============================================================================================================================
+SIMILARITIES b/w HashMap and TreeMap:
+
+key value pair,
+key is unique, values can be duplicate
+mapping from key to values,
+not synchronized,
+put() used.
+===========================================================================================================
+
+Iterable methods:
+----------------
+next, hasNext, remove
+
+Collections class methods:
+----------
+clone, iterator, stream
+add, addall,
+remove, removeall,   retainAll, 
+equals, contains,    containsAll,
+clear, isEmpty,
+size, toArray
+
+List:
+------
+get, set
+indexOf, lastIndexOf,
+
+ArrayList methods:
+----------------------
+get, set, indexOf, lastIndexOf, sort(l, comparator)
+
+comparing methods b/w two ALs: equals(), contains(), retainAll(), removeAll(), stream()  [come from collection I]
+
+LinkedList methods:
+--------
+get, set, indexOf, lastIndexOf
+
+addFirst, addLast,
+removeFirst, removeFirstOccurence, removeLast, removeLastOccurence, 
+
+getFirst, getLast,      descendingIterator
+offer, offerFirst, offerLast, 
+
+peek, peekFirst, peekLast, 
+poll, pollFirst, pollLast, 
+push, pop, 
+
+
+Set:
+----
+iterator, size, clone
+add, remove, 
+clear, contains, isEmpty [no toArray, stream, equals, retainsAll, removeAll, addAll]
+
+
+TreeSet methods:
+----------------
+first, last,
+ceiling, floor, 
+higher, lower,
+headSet, tailSet,
+pollFirst, pollLast,
+descendingIterator, descendingSet, subSet
+
+Map:
+-----
+get, put, putAll,		
+hashCode,putIfAbsent, getOrDefault,
+remove, clear, size, isEmpty,		
+compute, computeIfAbsent, computeIfPresent,
+containsKey, containsValue, replace,
+iterate: forEach, keySet, values, 
+sort: entrySet
+2coll:  replaceAll, equals,  merge,
+
+
+Map.Entry(Sub-I of Map):
+------------------------ 
+getKey, getValue, setValue, hashCode, equals
+
+HashMap:
+--------
+all map methods extra--clone////except---hashCode
+
+TreeMap:
+--------
+get, put, putAll,                  clone, comparator,
+size, clear, remove, containsKey, containsValue,
+iterate: forEach, keySet, values, sort: entrySet
+2Coll:  replace, replaceAll,
+
+firstEntry, lastEntry, firstKey, lastKey,
+higherEntry, lowerEntry, higherKey, lowerKey,
+ceilingEntry, floorEntry, ceilingKey,
+
+headMap, tailMap, subMap, descendingMap(not in SortedMap),
+descendingKeySet, navigableKeySet,
+pollFirstEntry, pollLastEntry
+
+
+headMap-----  < head entry all the entries retrieved
+tailMap----- >= tail entries retrieved along with tail entry
+submap------all entries b/w specified entries along with lower entry
+descendingMap----desceding order entries
+higher/lower-------all entries >than //// all entries <than 
+ceiling/floor-----all entries >=////all entries <=
+
+HashTable:
+-----------
+Enumeration return type: elements(), keys()
+=============================================================================================================================================
+
+HANDLING LISTS:
+-----------------
+
+
+Given:		List<String> l= new ArrayList<String>(10);
+		
+		l.add("Hi");
+		l.add("How");
+		l.add("Are");
+		l.add("You?");
+		l.add("Hi");
+
+To:     	CONVERT AL to Set	
+		=================
+
+Sol:	
+using,
+1. add method
+2. addAll method
+3. constructor method
+4. stream
+
+	//1. using iterative & 	add method
+	ArrayList<String> colorsList = new ArrayList<String>(Arrays.asList("Red", "Green", "Blue", "Cyan", "Magenta", "Yellow")); 
+        Set<String> hSet = new HashSet<String>(); 
+        for (String x : colorsList) 
+            hSet.add(x);   
+        System.out.println(hSet);
+        
+        //2.using addAll method
+       Set<String> hSet1 = new HashSet<String>(); 
+       hSet1.addAll(colorsList);   
+       System.out.println(hSet1);   
+    
+       //3.using constructor method
+       Set<String> hSet2 = new TreeSet<String>(colorsList);        
+   	   System.out.println(hSet2);
+   	   
+   	//4. using stream() method
+   	Set<String> set = colorsList.stream().collect(Collectors.toSet()); 
+   	System.out.println(set); 
+---------------------------------------------------------------------------
+//to convert arraylist to synchronized list
+
+		Collections.synchronizedList(l);               	   //prints in insertion order
+		synchronized(l){  								  //synchronized block to avoid non deterministic behaviour
+			Iterator<String> itr =l.iterator();
+			while(itr.hasNext())
+				System.out.println(itr.next());
+		}
+
+--------------------------------------------------------------
+
+To:		ITERATE over elements
+		======================
+
+sol:
+1. for loop
+2. for-each
+3. foreach()
+4. forEachRemaining()
+5. Iterator interface
+6. ListIterator interface -------------------when to traverse reversely it can be used cz previous method available...other methods in ListIterator: nextIndex, previousIndex
+
+
+		//by iterator interface
+		Iterator<String> itr =l.iterator();
+		while(itr.hasNext())
+			System.out.println(itr.next());
+		
+		//by ListIterator interface-------prints in reverse order
+		ListIterator<String> ls= l.listIterator(l.size());
+		while(ls.hasPrevious())
+			System.out.println(ls.previous());
+			
+		//by forEachRemaining() method
+		Iterator<String> itr= l.iterator();
+		itr.forEachRemaining(a->{
+			System.out.println(a);
+		});
+			
+		//for loop
+		for(int j=0;j<l.size();j++)
+			System.out.println(l.get(j));
+			
+		//for-each
+		 for(String i: l)
+		    System.out.println(i);
+		    
+		//foreach() method
+		l.forEach(x ->{
+			System.out.println(x);
+		});
+
+--------------------------------------------------------------
+Handling MAPS:
+---------------------
+
+
+Given:		HashMap<Integer,String> hm= new HashMap<Integer,String>();
+		hm.put(0, "hi");
+		hm.put(1, "good");
+		hm.put(2, "morning");
+
+To:	        Iterate  MAPS
+		================================
+
+sol:		
+1. using keySet and values  method  --- to get key alone///value alone
+2. using forEach
+3. iterator over keys alone
+		
+	//1. iterate over keys and values----getting only key or only values
+		for(Integer i:hm.keySet())
+			System.out.println(i);
+		for(String s: hm.values())
+			System.out.println(s);
+		
+	//using forEach
+		hm.forEach((k,v)-> System.out.println(k+ "    "+ v));
+		
+	//using keySet.iterator------cause using iterator on keys and then iterating k,v
+		Iterator<Integer> itr=hm.keySet().iterator();
+		while(itr.hasNext())
+		{
+			int key= (int)itr.next();
+			System.out.println(key + "    "+ hm.get(key));
+		}
+
+To:		Sort Map
+		=======
+sol:	
+1. using streams by key and value
+2. converting to tree map and sort
+
+
+	 //by key
+	 hm.entrySet().stream().sorted(Map.Entry.comparingByKey()).forEach(s->System.out.println(s));
+  	 hm.entrySet().stream().sorted(Map.Entry.comparingByKey(Comparator.reverseOrder())).forEach(s->System.out.println(s)); 
+
+	 //by value
+	 hm.entrySet().stream().sorted(Map.Entry.comparingByValue()).forEach(s->System.out.println(s));
+	 hm.entrySet().stream().sorted(Map.Entry.comparingByValue(Comparator.reverseOrder())).forEach(s->System.out.println(s));
+
+	 //2. sorting hash map by converting it to tree map 
+		TreeMap<Integer,String> tmp= new TreeMap<Integer, String>(hm);
+				
+		Iterator<Integer> it=hm.keySet().iterator();
+		while(it.hasNext())
+		{
+			int key=(int)it.next();
+			System.out.println(key +  "    "+  hm.get(key));
+		}
+
+=============================================================================================================================================
+LIST:
+-----
+duplicate elements, many null values,insertion order, dynamic size, not synchronized
+
+
+Arraylist:
+ascending order ----sort()
+remove element-------remove(index) or remove using iterator
+
+LinkedList:
+at both ends add or remove is possible.
+
+Vector:
+implements List
+similar to ArrayList  but synchronized
+
+Stack: a subclass extends vector class
+sub class of vector
+all vector methods and own methods
+some methods: push, pop, peek
+=========================================================================================================
+
+SET(I):
+no duplicate elements, only one null value, fixed size, not synchronized, unordered set of elements(no insertion order)
+Hashset: unique elements
+-----------------------
+implements Set
+Hashing used and elements stored in HashTable/HashSet
+----------------------------------------------------------------------
+LinkedHashSet:  unique elements
+--------------
+extends HashSet nd implements Set interface           linked list implementation of Set interface
+maintains insertion order
+null elements allowed
+----------------------------------------------------------------------
+TreeSet:  unique elements
+--------
+implements SortedSet
+use tree for storage
+elements stored and retrieved in ascending/increasing order
+access nd retrieval : very fast
+no null elements
+==================================================================================================
+QUEUE(I):
+maintains First-In-first-Out.
+Its an ordered List holding elements to be processed.
+
+Priority Queue:
+------------------
+implements queue
+no ordered elements
+no null values can be stored and used
+it hold elements whicha are to be processed by their priorities
+
+Dequeue(I): extends Queue
+----------------
+add and remove elements from both ends
+its called Double Ended Queue
+ArrayDeque:
+-----------
+implements Dequeue
+add delete elements from both ends
+faster than arraylist and stack		
+==================================================================
+MAP(I): 
+
+unique keys, (ie, key-value pair)
+one null key & many null values(exceptTreeMap),
+size alitter capacity: default initital is 16 with laod facctor 0.75
+not synchronized
+access: easy to perform using key index,
+order:unordered, insertion, increasing
+implements/inherits:
+
+HashMap:
+---------
+un-ordered elements
+implements Map I
+One object is used as a key (index) to another object (value). 
+If you try to insert the duplicate key, it will replace the element of the corresponding key.
+can be accessed by indexing
+
+LinkedHashMap:
+---------------
+unique elements
+contains value based on key
+one null key but many null values
+not synchronized
+order: insertion order
+implements MapI nd extends HashMap.
+
+
+Tree Map:
+---------
+unique elements
+contains value based on key
+no null key but many null values
+not synchronized
+order: sorted by keys--- increasing order of elements
+implements Map and SortedMap
+stores in tree
+
+=========================================================================================================
+
+HashTable:
+----------
+contains value based on key
+unique elements
+no null key and values
+rehash() method used to increase the size of hashtable
+synchronized
+an array of list...each list is called bucket....bucket position identified by calling hashcode() method
+implements Map interface, inherits Dictionary class
