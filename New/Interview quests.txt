@@ -1,0 +1,185 @@
+Scenario and Scenario outline:
+
+Outline takes user data in a table format
+and 
+runs the same scenario for multiple times with diffferent combo of data
+
+ArrayList and Set:
+
+
+List					Set
+duplicate elements			unique elements
+many null values			only one null value
+dynamic size				fixed size
+elements in insertion order		random order
+
+
+Arraylist:
+ascending order ----sort()
+remove element-------remove(index) or remove using iterator
+
+Regression and Retesting:
+both involves continuous testing
+Regression:				Retesting:  	
+searching the defects			fixing the defects
+for passed TCs				for failed TCs
+check if any changes done		ensure the TCs that failed earlier are fixed
+doesnt affect the unchanged code
+
+
+
+
+
+
+
+Hashmap and Linkedhashmap:
+HashMap:							LinkedHash map:
+key-value pairs							key-value pairs
+no duplicate keys possible					no duplicate keys possible
+one null key and many null value possible		        one null key and many null value possible
+not synchronized						not synchronized
+extends abstract map						extends hashmap
+low memory used						 	uses double linked list so more memory
+								alternative to hash map ...
+								all properties and methods of hashmap here also....
+								additionally, maintain insertion ordr of elements
+
+
+
+Explicit and Fluentwait
+-----------------------------------------------------------------------------------------------------------
+List       	  Set			Map
+Arraylist	HashSet			HashMap(has a method entryset to convert to set)
+LinkedList	LinkedHashSet		LinkedHashMap
+Vector		TreeSet			TreeMap
+
+add		add<Integer>		put<Integer, Integer>
+get		get			get
+
+					Hashmap 		HashTable:
+Synchronized and thread safe:   not synchronized		synchronized
+				no thread safe 			thread safe
+not null key and value:		one null key 			no  null key and value
+				many null values
+iteration			iterator used			enumerator used
+
+------------------------------------------------------------------------------------------------------------------	
+Exception got in selenium webdriver:
+
+2. element click intercepted
+3. element not interactable
+1. timeout
+7. session not created
+4. no such element
+5. no such attribute
+6. no such window
+
+
+
+
+1.	Interface implementation:
+	how to pass argument to methods of interface
+		You can write a generic interface for adding some type, something like this:
+
+public interface Addable<T> {
+    public int add(T value);
+}
+and then implement it via
+
+public class ClassA implements Addable<Integer> {
+    public int add(Integer value) {
+        ...
+    }
+}
+
+public class ClassB implements Addable<String> {
+    public int add(String value) {
+        ...
+    }
+}
+
+
+2.	locators known, tags used to
+		id, name, classname, xpath, css, linktext: a, button, div, svg
+3.	Recursion methods  - factorial
+		public static int factorial(int x) {
+		if (x == 1)
+			return 1;
+		else
+			return (x * factorial(x - 1));
+	}
+4.	String having integers and alphabets, how to get the sum of the integers alone
+				public static int find2(String s) {
+
+		  int sum = 0;
+		    Matcher m = Pattern.compile("(-?\\d+)").matcher(s);
+		    while (m.find()) {
+		        sum += Integer.parseInt(m.group(1));
+		    }
+		    return sum;
+	}
+
+5.	Hash Map add and display
+		HashMap<String,String> hm = new HashMap<String,String>() ;
+		hm.put("1", "Animal");
+		hm.put("2", "Bird");
+		
+		for(Map.Entry mp:hm.entrySet() )
+			System.out.println(mp.getKey() + " " + mp.getValue());
+
+6.	Remove duplicate elements in arraylist using stream and Collect it
+			List<Integer> values=Arrays.asList(3,2,1,5,7,9,7,5,9);
+			values.stream().distinct().forEach(s->System.out.println(s));
+
+			List<Integer>val=values.stream().distinct().sorted().collect(Collectors.toList());
+			System.out.println(val.get(3));
+
+7.	Convert Arraylist to Set
+		4 ways:
+			1. using iterative method
+ public static void main(String[] args)  
+	{ 
+        ArrayList<String> colorsList = new ArrayList<String>(Arrays.asList("Red", "Green", "Blue", "Cyan", "Magenta", "Yellow")); 
+        Set<String> hSet = new HashSet<String>(); 
+        for (String x : colorsList) 
+            hSet.add(x);   
+	System.out.println(hSet);   
+	} 
+			3. usign addAll method
+public static void main(String[] args)  
+	{ 
+        ArrayList<String> colorsList = new ArrayList<String>(Arrays.asList("Red", "Green", "Blue", "Cyan", "Magenta", "Yellow")); 
+        Set<String> hSet = new HashSet<String>(); 
+	hSet.addAll(colorsList);   
+	System.out.println(hSet);   
+	}
+
+			2. using constructor method	
+public static void main(String[] args)  
+	{ 
+        ArrayList<String> colorsList = new ArrayList<String>(Arrays.asList("Red", "Green", "Blue", "Cyan", "Magenta", "Yellow")); 
+        Set<String> hSet = new TreeSet<String>(colorsList);        
+	System.out.println(hSet); 
+	} 				 
+
+			4. using stream() method
+public static void main(String[] args)  
+	{ 
+        ArrayList<String> colorsList = new ArrayList<String>(Arrays.asList("Red", "Green", "Blue", "Cyan", "Magenta", "Yellow")); 
+	Set<String> set = colorsList.stream().collect(Collectors.toSet()); 
+        System.out.println(hSet); 
+	}
+			
+8.	What are the methods available in streams---filter, map, collect functions
+9.	Git 
+10.	Design Patterns:---POM
+11.	Tags in selenium
+
+There are various ways to traverse the collection elements:
+
+By Iterator interface.
+By for-each loop.
+By ListIterator interface.
+By for loop.
+By forEach() method.
+By forEachRemaining() method.
