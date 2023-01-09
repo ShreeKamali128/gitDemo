@@ -1,0 +1,650 @@
+TO KNOW:
+1.byte code is not 0s and 1s.. it is intermediate portable code. JVM uses byte code. after translation by jvm only, it is runnable bcz after translation it is converted to machine code
+machine code is 0s and 1s its also called binary code.
+2. jdk provides javac for compiler to convert source code to byte code 
+3. why inheritance?   function override (runtime polymorphism) and code reusability
+4. when ther is redundant or collsion between data members and member functions, the child class gives  preference to local ones(within the class)
+5. this keyword, refers object of the class. can print local variable and a class variable together with this keyword
+6. multiple inheritance is not possible in inheritance, bcz since which method to invoke is decided in run time(when same methods are there in parent and child class---ie.run time polymorphism) based on parent type reference made to the object
+7. class extends class//// interface extends interface//// class implements interface
+8. Collections -- class//// Collection Interface
+9. equals, retainsAll, removeAll----comparing methods in collectin I, so they are not used with Set interface(no duplicate elements)
+retainAll --- return common element b/w 2 collections
+removeAll --- remove 2nd Collction elements from first collection eg: list1.removeAll(list2);
+10, unique methods in specific collections:
+LinkedList--- descendingIterator
+Map---------- entrySet
+11. main differences among all collection classes
+---duplicate elements allowed?
+---null values allowed?
+---size: dynamic or static?
+---synchronized:  or non-synchronized?
+---access: search or add/remove?
+---order: insertion or increasing order or unordered?
+---implements/inherits which interface/class?
+12. D/b HashSet and HashMap: only values/////an entry-- key and value
+13. HashMap sorted by converting to 
+	set using entrySet or 
+	treeMap using constructor(param passing)
+	using streams
+14. Synchronized basically means that only one thread can access methods of that particular class at any given time. StringBuffer is an example of a synchronized class. A Synchronized class is a thread-safe class.
+Non-Synchronized means that two or more threads can access the methods of that particular class at any given time. StringBuilder is an example of a non-synchronized class. Generally, a non-synchronized class is not thread-safe. (but some non-synchronized classes are thread-safe)
+15. List elements cant be sorted, Collections class provides sort method for list elements to be sorted
+16. Properties class ------ a subclass of HashTable
+Note:
+-----
+1. performance is based on underlying data structure	[adding element to the treeset is slower to hashset ie adding element to a tree is slower than hashtable ]
+2. performance fater to slower-----HashSet - TreeSet - LinkedList - Array
+3. https://www.java67.com/2019/06/top-5-sorting-examples-of-comparator-and-comparable-in-java.html
+4. https://www.java67.com/2012/08/difference-between-hashmap-and-ArrayList-in-Java.html
+5. https://www.java67.com/2014/04/java-8-stream-examples-and-tutorial.html  
+https://www.javatpoint.com/java-8-stream
+
+eg:
+class
+{
+int a=2;              //instance variable
+public void meth()
+{
+int a=3;	//local variable
+sysout(a);  //ans:3   //local variable preferred
+sysout(this.a);  //ans: 2
+}
+}
+=================================================
+ACCESS SPECIFIERS:
+-------------------
+Public, Default, Protected, Private:
+Public: any package any class...
+Protected: any package but should extend parent in diffrent package
+Default: same package any class...
+Private: same package only curr ent class
+==============================================================================
+
+
+Comparator Vs Comparable:
+---------------------------------------------------------------------------------------------------------------------
+method overridden:	compare()		compareTo()
+package:		java.util		java.lang
+arguments 		Object o1, Object o2	Object o
+comapares		two objects		compare passed and this object
+
+Sorting al:
+-----------
+Comparator<Book> byAuthor = (b1, b2) -> b1.getAuthor().compareTo(b2.getAuthor());
+al.sort(byAuthor);
+
+Comparable:
+-----------
+sort(List l)-------for list
+compareTo(Object o)
+
+Comparator:
+------------
+compare(obj1, obj2),
+equals(Object element)
+sort(List l, Comparator c)--------for list
+
+Comparable (I):
+---------------
+using this, we can order the objects of user defined class
+only one method ---compareTo(Object obj)
+only single sorting sequence-----sort elements on basis of single data member
+
+it compares current object with specified object. it returns +ve integer, -ve integer, zero
+
+we can sort elements of
+  String objects, Wrapper class objects, user-defined class objects
+
+Collections class: static methods for sorting collection elements, TreeSet or TreeMap. We cant sort list elements; there are some methods for list elements(eg: sort())
+List elements must be Comparable type(compareTo(List lis))
+=========================================================================================
+
+STREAMS:
+-------------------------------------------------------------------------------------------------------------------------
+
+methods available:
+-----------------
+Stream.Builder of peek toArray(2) 
+iterate count 
+generate concat
+empty reduce(3) skip 
+
+filter limit distinct sorted
+map collect(2)  
+
+allMatch, anyMatch, noneMatch 
+
+max min
+
+findAny findFirst 
+
+flatMap flatMapToDouble flatMapToInt flatMapToLong
+
+forEach forEachOrdered 
+
+mapToDouble mapToInt mapToLong 
+
+================================================================================================================================================================
+
+
+
+
+OOPS:
+
+
+ABSTRACTION VS ENCAPSULATION:
+-------------------------------------------------------------------------------------------------------------------------------------------------
+
+both hide details to simplify things but for different reasons. 
+
+represent taking out the behavior from how exactly is implemented.
+means hiding details of implementation from the outside world so that when things change nobody gets affected. 
+
+hides details for simplification 
+hides details for making it easier to change
+
+implemented using the interface and abstract class 
+implemented using private, package-private(default), and protected access modifiers.
+
+Design principles "programming for interface than implementation" 
+"encapsulate whatever changes"
+
+hiding internal details of a program and exposing the functionality only.
+binding up of data along with its correlate methods as a single unit.
+
+Implementation hiding is done using this 
+Information hiding is done using this  Encapsulation is also called (data hiding.)
+
+lets somebody see the What part of program purpose.
+conceals or covers the How part of the program's purpose.
+
+
+INTERFACE/ABSTRACT CLASS:
+it have all common centralized methods that must be implemented in child classes
+only body/definition/skeletal no implementation so its called abstract methods
+we ahve to provide implementation method using @override and call themin main class
+
+Interface:						AbstractClass
+only abstract methods					both abstract and concrete methods
+implements						extends
+100% abstraction					partial abstraction
+public acccess specifier for methods			any except private for methods
+public/final/static for variables			any except private for variables
+interface keyword					abstract keyword for both class nd method
+can instantiate in main class				cannot instantiate abs class in main class
+
+INHERITANCE:
+In Java, only one class can be extended from child class (not in cpp)
+Has-a Relationship
+When a class inherits an instance from a different class or an instance of its class, then the relationship is a has-a type.
+full implementation will be there in parent class, child class can extend it and modify it accordingly---> overrding
+when called from main class, only cahnged method in child class come as output
+eg:
+class A
+{
+int i=10;
+}
+
+class B extends A
+{
+int i=20;
+}
+
+public class Mainclass
+{public static void main(Stirng args[])
+{
+A a= new B();
+System.out.println(a.i);     //ans: 10
+B a= new B();
+System.out.println(a.i);     //ans: 20
+}
+}
+
+Here, we tell the return type should be from the class name mentioned,
+ so the ans will be from that class name----------parent type reference so 10 
+-----------------------------------------------------------------------
+FUNCTION OVERLOADING:
+function with same name should differ eithr by argument data type or argument count
+
+FUNCTION OVERRIDING:
+function will ahve smae name, same parameter, same return type and same skeleton
+but when called it refers to local method only not from parent
+-------------------------------------------------------------------------------------
+Encapsulation:
+Using private keyword for variables and using getter setter method is encapsulation
+also called data hiding.
+wrapping data and methods in a single unit
+
+usign getter setter in a class...
+---------------------------------------------------------------------------------------
+Array:
+initializing array:
+1. int a[]= new int[2];
+2. int a[]= {1,2,3,4}
+2d array:  int a[][]= new int[2][3];  int a[][]={{2,3,4},{1,2,3}}
+---------------------------------------------------------------------------------------
+2 steps for any sub or child class:
+1. provide 'implementation'(own or overridden) for methods
+2. calling those methods from main class('invoking')
+so,
+Function Overriding:(related to implementation)
+RunTimePolymorphism: (related to invoking)
+
+FUNCTION OVERLOADING:					FUNCTION OVERRIDING
+there should be two different functions	with		same function of extended class with
+same functn name					same functn name, argumnt count or data type
+should show difference by argumnt count or data type     
+
+Function overriding can be done only with help of inheritance
+[function overriding should be done after inheritance but if inheritance used, function overriding need not to be done ]
+-------------------------------------------------------------------------------------------------
+RunTimePolymorphism: (related to invoking)
+--------------------
+Why is it called Runtime Polymorphism?
+all things name, return type, func nameor argument count are same for both functions but functionality differs
+when we call an overridden method of child class through its parent type reference (this phenomenon in java is referred to as “Upcasting”), then the type of the object indicates which method or functionality will be invoked.
+eg:
+class A
+{
+int i=10;
+}
+
+class B extends A
+{
+int i=20;
+}
+
+public class Mainclass
+{public static void main(Stirng args[])
+{
+A a= new B();
+System.out.println(a.i);     //ans: 10
+B a= new B();
+System.out.println(a.i);     //ans: 20
+}
+}
+ 
+Making of this decision happens during runtime by JVM after the compilation of code. Hence it is called as Run time polymorphism.
+
+It is also referred to as “Dynamic method dispatch”. Reason being named so, due to the fact that the functionality of the method is dynamically decided in run time as per the object by JVM
+
+It is also called “Late binding” because binding of method and object, which means the functionality of which object’s method will be displayed, is decided late, i.e. after compilation.
+
+Limitations of Runtime Polymorphism:(bcz overridden methods invokation is only called RUntime polymorphism, and u cannot override the private
+static final methods of parent class----so indirect limitations these are)
+One cannot override the private methods of a parent class.
+One cannot override Final methods.
+One cannot override static methods.
+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+2stepExecution ofJava:
+----------------------
+Javas .java file converted to .class file ie source code converted to byte code by machine or OS independent encoding by platform independent compiler.
+
+now this byte code is sent to the jvm, it goes through 3 stages.
+1. class loader:
+---------------
+main class's .class file is loaded into the memory to the jvm and as soon ass its invoked.
+All the other classes referenced in the program are loaded through the class loader.
+2types of class loader: primordial and non-primordial
+----------------------------------------------------------
+primordial: defauld class loader
+non-primordial-- user defined, customized class loader
+2.byte code verifier:
+----------------------
+after loading, the byte code of all classes inspected by the bytecode verifier, whose job is to check that the instructions don’t perform damaging actions. The following are some of the checks carried out: 
+
+Variables are initialized before they are used.
+Method calls match the types of object references.
+Rules for accessing private data and methods are not violated.
+Local variable accesses fall within the runtime stack.
+The run-time stack does not overflow.
+If any of the above checks fail, the verifier doesn’t allow the class to be loaded.
+
+3. Just in time compiler: JIt compilation--> Dynamic compilation---- advantage: performance optimization
+----------------------------
+opposite of using JIT compiler ----using the interpretation... that reduce performace of java based applications at run time
+This is the final stage encountered by the java program,
+ and its job is to convert the loaded bytecode into machine code. 
+When using a JIT compiler, the hardware can execute the native code,
+ as opposed to having the 'JVM interpret the same sequence of bytecode repeatedly and incurring 
+the penalty of a relatively lengthy translation process'. 
+This can lead to performance gains in the execution speed when methods are executed frequently.
+[JIT compiler is used in jvm for performing 
+last stage process of converting byte code to machine code.
+this increase the execution time a way more than the compiled platform dependent program]
+
+JIT compilation involves two approaches ---> AheadOfTime compilation and then Interpretation to translate code
+
+1. A system implementing a JIT compiler typically continuously analyses the code being executed and identifies parts of the code where the speedup gained from compilation or recompilation 
+2. JIT compilation is a combination of the two traditional approaches to translation to machine code—ahead-of-time compilation (AOT), and interpretation—
+3. JIT compilation has enhanced performance, cost of compilation high, more time, use more cache memory.
+a devicce that uses JVM continuously translated the code to look up for optimizations
+-----------------------------------------------------------------------------------------------------------
+
+Date:			Calendar
+d			Day Of Month, Date
+D			Day of Year
+M			Month
+y			Year
+W			Week of Month, Day of week in month
+w 			Week of Year
+E			Day-- Sunday....
+F			Week of month
+a			Am_Pm(0--AM, 1--PM)
+h			Hour( in 1-12)
+H 			Hour of Day(1-24)
+m			Minute
+s			Second
+S			Millisecond
+G			Era
+z			cal.getTimeZone().getDisplayName()
+-------------------------------------------------------------------------
+Constructor:
+
+when object for a class created, it implicitly calls the constructor of the class
+name: class name
+no any return values
+if no constructor, compiler calls default constructor
+
+when even one consructor is also defined and you pass a string in 'new class_name("HELLO")',
+when you want to refer to the defalult empty constructor amidst al other constructors defined, then write it explicitly..
+---------------------------------------------------------------------------------------------------------------------------------------
+Instance/Local/Class variable:
+===============================
+Instance variable:
+------------------
+defined in a class as data member are instance variables
+can access it using this keyword;  after assigning it via constructor, they get updated.
+so we can access it then by calling it from another method, since constructor wont return it
+Class variable:
+-------------
+static variable used because one copy of that variable itself shared among all the objects so saves memory space for all objects using this same data
+suppose a static variable is changed inside a method, then it gets updated as a global.
+so when the next object uses the same static variable, it continues from the latest updation
+if it were instance variable it wil not start from latest updation
+-----------------------------------
+Static Method:
+accept only static variables, display only static variables
+--------------------------
+Static blocks: all static variable initialization can be placed in static block
+--------------------------------------
+final:
+final classes cant be extended
+final methods cant be overridden
+final variables cant be altered
+----------------------------------------
+Packages:
+java.lang -----inbuilt with packages so no specific mention to it needed
+---------------------------------------------------------
+Exceptions:
+try{}
+catch(){}-----only after try it works
+finally{}----only after catch block it works
+though any steps fail in try block the steps given in finaaly will execute. eg for such steps
+in selenium: browser close, deleteAllCookies.
+it runs for sure, but if forcefully stopping the jvm by manual intervention, then it wont
+=========================================================================
+Checked Exceptions
+We can handle the Checked Exceptions during the process of writing codes. We handle these exceptions before compiling the code. Therefore, we examine such exceptions at the compile time.
+
+Unchecked Exceptions
+These exceptions throw at runtime. Unchecked exceptions are more disastrous than the compile-time exception as it causes problems while running Automation pack in headless.
+
+===========================================================================
+
+EnumSet class methods:
+of, allof, noneof, copyof, range, clone
+
+====================================================================================
+Java L2: all sources from geeksforgeeks except few 
+=====================================================================================
+Wrapper class/ AutoBoxing, Unboxing:
+------------------------------------
+Java is pure object oriented language, there are primitive data type members are not class objects.
+So, for each primitive type there would be a corresponding wrapper class. ...So there exists wrapper class and wrapper class objects
+Wrapper clss used to convert primitive type to object(AutoBoxing) and object into primitive(UnBoxing)
+
+What is boxing in Java wrapper?
+The object of the wrapper class wraps or holds its respective primitive data type. The process of converting primitive data types into an object is called boxing. While using a wrapper class, you just have to pass the value of the primitive data type to the constructor of the Wrapper class.
+
+NOTE: ALl these occurs automatically by java compiler
+
+it applies autoboxing when, a primitive value 
+1--passed as parameter to a method that expects object of corresponding wrapper class
+2--assigned to a variable(object) of corresponding wrapper class
+
+
+it applies autounboxing when, a primitive value 
+1--passed as parameter to a method that expects value of ,corresponding primitive data type
+2--assigned to  corresponding primitive type
+
+
+public class NotUsingAutoBoxing{
+
+// Suppose the internal variables are in Wrapper types
+Integer iObj;
+Float fObj;
+Long lObj;
+Double dObj;
+
+public NotUsingAutoBoxing() {
+
+}
+
+public static void main( String[] args ) {
+
+NotUsingAutoBoxing a = new NotUsingAutoBoxing();
+
+// You have to create instances of Wrapper classes first
+// before you save them into the internal variables. This
+// is called boxing.
+a.iObj = new Integer( 22 );
+a.fObj = new Float( 22.0 );
+a.lObj = new Long( 22L );
+a.dObj = new Double( 22 );
+
+// In the following code, you are unboxing in order to
+// get primitive types.
+System.out.println( " int Value of iObj is: " + a.iObj.intValue() );
+System.out.println( " float Value of iObj is: " + a.fObj.floatValue() );
+System.out.println( " long Value of iObj is: " + a.lObj.longValue() );
+System.out.println( " double Value of iObj is: " + a.dObj.doubleValue() );
+
+
+}
+}
+ 
+
+=========
+Note: === compares reference; Equals method compare values
+==========================================================
+equals() and hashcode():
+1--Object class has these 2 methods----public boolean equals and public int hashcode()
+
+equals() is to compare equality of two objects.
+2 types------shallow and deep comparison.
+shallow comparison:
+	this is the default implementation present in which two object references refer to the same object. Object class no data member so shallow comparison
+deep comparison: 	
+	Suppose a class provides its own implementation of equals() method in order to compare the Objects of that class w.r.t state of the Objects. That means data members (i.e. fields) of Objects are to be compared with one another. 
+Such 'Comparison based on data members' is known as deep comparison.
+equals method should be reflexive, symmetric, transitive, consistent......
+
+
+import java.io.*;
+  
+class Geek 
+{
+      
+    public String name;
+    public int id;
+          
+    Geek(String name, int id) 
+    {        
+        this.name = name;
+        this.id = id;
+    }
+      
+    @Override
+    public boolean equals(Object obj)
+    {
+    if(this == obj)
+       return true;		
+          
+    if(obj == null || obj.getClass()!= this.getClass())                      //it ll surely return false if param obj's class if of subclass of Geek
+       return false;
+          
+    Geek geek = (Geek) obj;
+          
+    return (geek.name == this.name && geek.id == this.id);
+    }
+      
+    @Override
+    public int hashCode()
+    {
+        return this.id;
+    }
+      
+}
+
+class GFG
+{     
+    public static void main (String[] args)
+    {
+        Geek g1 = new Geek("aa", 1);
+        Geek g2 = new Geek("aa", 1);
+     
+        if(g1.hashCode() == g2.hashCode())
+        {
+            if(g1.equals(g2))
+                System.out.println("Both Objects are equal. ");
+            else
+                System.out.println("Both Objects are not equal. ");
+      
+        }
+
+
+--------------------------
+if hashCode() is invoked more than once on the same Object then it must consistently return the same Integer value, 
+f two Objects are equal, according to the equals(Object) method, then hashCode() method must produce the same Integer on each of the two Objects.
+Equal objects must produce the same hash code as long as they are equal, however unequal objects need not produce distinct hash codes.
+
+========================================
+Enums:
+values(), valueOf(), ordinal:
+
+1--values---return array of constants in enum
+valueOf-----return the constant in enum
+ordinal--------enums hve constant index, ordring very important, so ordinal gives the constants index
+
+2--inherits java.lang.Enum
+toString overridden
+
+1--every enum internally implemented by class
+class Color
+{
+     public static final Color RED = new Color();
+     public static final Color BLUE = new Color();
+     public static final Color GREEN = new Color();
+}
+
+Since static, we can access it by using the enum Name.
+ Since it is final, we can’t create child enums.
+
+2----every enum constant represents object of type enum
+3---enum type can be passed as an argument to switch statement
+
+
+Eg:
+enum Day {
+    SUNDAY,
+    MONDAY,
+    TUESDAY,
+    WEDNESDAY,
+    THURSDAY,
+    FRIDAY,
+    SATURDAY;
+}
+
+public class Test {
+    Day day;
+ 
+    public Test(Day day) { this.day = day; }
+    public void dayIsLike()
+    {
+        switch (day) {
+        case MONDAY:
+            System.out.println("Mondays are bad.");
+            break;
+        case FRIDAY:
+            System.out.println("Fridays are better.");
+            break;
+        case SATURDAY:
+        case SUNDAY:
+            System.out.println("Weekends are best.");
+            break;
+        default:
+            System.out.println("Midweek days are so-so.");
+            break;
+        }
+    }
+ 
+    public static void main(String[] args)
+    {
+        String str = "MONDAY";
+        Test t1 = new Test(Day.valueOf(str));
+        t1.dayIsLike();
+    }
+}
+
+
+==============================================
+Assertions:
+
+1--Assertion Vs Normal Exception Handling
+
+Assertions are mainly used to check logically impossible situations.
+For example, they can be used to check the state a code expects before it starts running or the state after it finishes running. 
+Unlike normal exception/error handling, assertions are generally disabled at run-time. 
+
+2--Where to use Assertions :
+
+Arguments to private methods. Private arguments are provided by the developer’s code only and the developer may want to check his/her assumptions about arguments.
+Conditional cases.
+Conditions at the beginning of any method.
+
+3--Where not to use Assertions :
+
+Assertions should not be used to replace error messages
+Assertions should not be used to check arguments in the public methods as they may be provided by the user. Error handling should be used to handle errors provided by users.
+Assertions should not be used on command line arguments.
+
+====================================================================
+VARARGS method:
+----------
+1---Internally, the Varargs method is implemented by using the single dimensions arrays concept. 
+Hence, in the Varrargs method, we can differentiate arguments by using Index. 
+A variable-length argument is specified by three periods or dots(…). 
+
+2----public static void fun(int ... a) 
+{
+   // method body
+} 
+This syntax tells the compiler that fun( ) can be called with zero or more arguments. As a result, here, a is implicitly declared as an array of type int[].
+
+3--- A method can have variable length parameters with other parameters too, but one should ensure that there exists only one varargs parameter that should be written last in the parameter list of the method declaration. For example:
+
+int nums(int a, float b, double … c)
+In this case, the first two arguments are matched with the first two parameters, and the remaining arguments belong to c.
+
+==========================================================
+FILE I/O:---------JavatPoint
+-----------
+Java I/O (Input and Output) is used to process the input and produce the output.
+ Java uses the concept of a stream to make I/O operations fast. 
+The java.io package contains all the classes required for input and output operations.
+ We can perform file handling in Java by Java I/O API.
+
+
+

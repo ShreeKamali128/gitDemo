@@ -1,0 +1,56 @@
+API:
+2 types:  SOAP webservices---XML and REST API---JSON
+Webservices are subset of API
+
+
+
+API:
+----
+   decouples the consuming application from the infrastructure providing the service.
+   offer security by design because their position as middleman facilitates 
+the abstraction of functionality between two systems
+   for human--- user interface... 
+   for applications -----API
+
+API as a middleman... 
+----------------------
+1. Client application request---> API
+2. API call(request with unique token as authorization credential for security) to-----> Web Server(Web Service by the other application )
+3. Web Server response to ----> API
+4. API response to -----> Client Application
+
+for enhanced security: along with authorization credentials, it use while exchange cookies, http header
+
+
+
+
+
+APIS
+NOTE: here the client application--application1;  server application---application2.... nothing much....
+
+	accept request from client application and send it to the server application
+	in turn it gives the response to the API so the API send received response to the Client application(who utilizes the Webservice of another application---as server here)
+	simply-----API just process request and response,no operations it performs by itself
+	Every webservices to test you need WSDL document contract from the application holder(application team also develop the webservice of their application and provide it to teh corresponding needy)
+	So when client needs server apppliation, the server just provides the WSDL doc to the client, and they use this doc to work in any tool like SOAP UI TOOL to make use of it
+	We can tell from the WSDL by seeing what are all the operations we can make use of from the webservice 
+	WSDL-WebServiceDescriptiveLanguage----It provides info of 2: 	
+								1---The standard format this webservice use
+								2---All the operations the webservice provides 
+									The operation needs an input from the client
+	Basically, client application need to give 2 inputs to the webservices:
+								1---The operation it needs 	and,
+								2---The input for the operation
+	In WSDL, the operation is in 'binding' tag and the input is in 'type' tag
+
+SOAP webservice is different from SOAP UI Tool
+
+
+
+1..SOAP
+	accepts xml format
+	a soap message has 4 parts:
+	namely:  SOAP envelope, SOAP header, SOAP body, SOAP fault
+	Envelope is the root element of a soap message. Its child are 
+								optional header element and 
+								mandatory body element

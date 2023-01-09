@@ -1,0 +1,570 @@
+
+
+
+We do functional Testing using Selenium not Performance or any other testng
+
+
+With cucumber bdd, 10 most common problems that need to be addressed in
+ framework design is solved WITHOUT ANY USE OF CODE..ie) in gherkin language 
+itself it is fulfilled..
+
+Cucumber BDD:
+Feature file: .feature extension...
+	tags: given, when, then, and, but	
+	Scenario, Scenario Outline, examples, background
+Tags: @Smoketest @SanityTest, @WebTest
+Regular expressions: in scenario write within quotes and in step definition \"([^/"]*)\" for one or two data
+
+DataTable:  data pipelined in scenario and in step definition in the method call, write (DataTable data)
+
+Scenario Outline: parameterization of scenario with multiple data...use <> and examples in scenario
+Examples:
+and in step definition use (.+)
+
+Background: pre requisite that is to be executed before all scenarios is written here
+NOTE: background and hooks cant be used together..
+Step definition file:	
+	tags: given, when, then, and, but
+	hooks with tagnames
+if pre-requisite for all scenarios differ, then hooks with tagnames used.
+@Before("@SmokeTest")
+
+
+TestRunner file:
+	Run with
+	two types: running with junit or testng(extends AbstractTestngCucumberTests)
+	cucumber options: 
+		features---src/java/features
+		glue----stepdefinition, tags="@SmokeTest", dryRun=true, monochrome=true, strict(default)
+		plugin={"pretty","html:target/cucumber.html","junit:target/cucumber.xml","json:target/cucumber.json"}
+dryRun:  checks that for a given scenario any step definition is missed
+monochrome:  gives docs in the console in a human readable format
+strict:  runs only if all scenarios passed
+
+
+
+10 quetions common problems:
+1. How to write and maintain reusable code across the framework?
+	with the help of step defnition and regular expression context..
+2. How to drive the data into the testcases?
+	dataTable helps to drive the data... 
+3. How to parameterize the testcases with multiple set of data?
+	Scenario Outline...
+4. how to achiece 100% test coverage through the framework?
+	Cucumber-Gherkin scenario...
+5. How to run all the tests on single click?
+	Test Runner...
+6. How to control the test execution to select and run only few based on needs?
+	Tags in feature file and mention the same in testRunner
+7. How to implement logic to separate test code from common post andpre requisite of the 
+test?
+	Hooks and Tags/Background...
+8. How to generate HTML reports and Junit reports?
+	Plugin cucumber option in test Runner
+9. How to develop Maven framework with existing code?
+10. How to integrate developed framework to Jenkins Continuous Integration environment?
+11. how to run testcases parallely in cucumner using testngrunner?
+	in testrunner, using object[][] call super.scenarios()...
+@Override
+@DataProvider(parallel=true)
+
+Dependency Injection and Design Pattern for cucumber scenarios:
+----------------------------------------------------------------
+
+	how to transfer the state of variables between stepDefinitions
+eg: the driver in 1st file runs fine, but in the 2nd file shows error
+ bcz the driver is not said to be assigned to something like in 1st file..driver= new chromeDriver()
+
+Qutn: when step definition file broken down to 2 files, what hapens?
+ 	nullpointer exception occur for the variables that are shared among them so 
+so that dependency injection used to fix it.
+	A class named TestContextSetUp is used and the variable shared initialized there.
+	in step definition files, the instance variable is initialized inside the constructor
+so that it is used as instance variables like tcs.driver.... (object.method is refered as instance variable of testContextSetUp class)
+
+==============================================================================================
+
+Single Responsibility Principle:
+----------------------------------
+loosely coupled class files in separate step definition files
+single class handles only those functions in that page not others...
+
+=====================================================================
+PageObject Pattern:
+---------------------
+Creating locators of different pages in different classes
+using by, locators written, action method that returns the locator to step definition file.
+in step definition file, class object instantiation done with drivers passed as argument
+========================================================================
+Factory Design Pattern:
+-----------------------
+a single class is created and given the responsibility of creating class objects for
+all page object files classes
+=======================================================================
+
+	   TestContextSetup:-----------------------------this is used in Stepdefinition files where all the class objects are initialized
+WebdriverManager class
+pageobjectManager class
+Reusable class
+===============================
+static scenario line in stepdefinition is a string..no cap and dollar inside tag...
+but dynamic scenario line in stepdefinition is a regular expression.. so use cap nd dollar.
+also parameter {string} should change with (.+)
+========================================
+
+Hooks:
+ driver quit written in @after hook.
+ here driver needs life from WebDriverManager's getDriver method. so using the object of the class it can be done.
+ but already its obj is in testContextSetUp class so link testContextSetUp in hooks class
+
+@After-----------executed after all scenarios done
+@AfterStep-------executed after every scenario line
+============================================
+Extent reports:
+3 things:
+1----2 dependencies: extent report by aventstack and
+		     extent report cucumber7 adapter by grasshopper
+2---in testrunner file: write keyword inside plugin cucumber option
+3---in src--test--java---create resource folder. in it create extentreport.properties file
+in it write some lines..basefolder.name, basefolder.datetimepattern, extent.reporter.spark.start, extent,reporter.spark.out...
+
+
+-----------------------------------------
+for failed scenario screenshot:
+
+in hooks at hook named @AfterStep write some code:
+	1. in it, driver is converted to TakesScreenshot class and told to getscreenshot as output file type
+	2. then using scenario- class object, attaching screenshots to extent reports:	
+		in hooks file:     for that just attach screenshot to scenario object, 
+		in the extent.properties file:   then extent reports by defalut has the ability to read the scenario object
+and find out any screenshot attached...if so it captures and attach it back into the extent report(for that write clearly the path)
+	3. in testrunner file: change the feature keyword value to "@target/failed_scenarios.txt"(@ at first, path to .txt file)
+==================================================================
+Junit and Testng testRunner files:
+-----------------------------------
+
+Cucumber cant run alone so depends on junit or testng framework to run via testrunner file
+
+while using junit use:
+	1. cucumber-junit and junit dependencies in pom.xml
+	2. and to import junit.cucumberoptions in testrunner file
+	3. use a 'test' word (at end for safer) in testrunner file
+while using testng use:
+	1. cucumber-testng and testng dependencies in pom.xml
+	2. and to import testng.cucumberoptions in testrunner file
+	3. extends abstracttestngcucumbertests class in testrunner file
+--------------------------------------------------------------------------
+
+how to run parallely the tests with testng and junit testrunner file?
+----------------------------------------------------------------------
+
+using testng:
+ 	1.to override scenarios method returning object type 
+	2. both scenarios and feaure files can run parallely
+
+using junit:
+	1. junit cant run tests parallely, but with the help of 'maven' along with junit, 
+tests can run parallely ------by adding a small configuration in "pom.xml"
+	2. only feature files can run parallely, scenarios only execute sequentially
+
+
+----------------------------------------------------------
+
+	
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+========================================================================================================================================================================================================================================
+Selenium:
+open source
+web automation tool
+Multiple platforms- windows, linux, mac, 
+multiple languages - java, python, c#, php, JS
+Multiple frameworks - Maven, TestNG, JUnit, BDD
+Multiple Browsers- chrome, firefox, internet explorer, safari, edge
+Uses Data control - excel, csv, notepad
+
+Automation Testing- Covers both Functional and Performance Testing
+Selenium involves Functional testing- regression testing for repetitive test cases
+Performance testing- Non functional testing-  like response time of the AUT
+
+Selenium possible testings:
+Core functional testing
+GUI testing
+DB testing
+Usability testing
+Regression testing
+Sanity testing
+cross browser testing
+E2E testing
+Business Process testing
+
+
+1-- Black box testing:    functional or data driven or closed box testing     
+Selenium is mostly about black-box testing, but you could do some whiter testing also with Selenium 
+	a. Functional testing  /Regression  testing
+	b. Non-functional testing
+	
+2-- White Box Testing
+3-- Performance Testing
+
+Functional/Regression testing done by: QTP, Selenium
+Functional Testing steps:
+1. Unit
+2. Integration
+3. System
+4. Regression
+5. User Acceptance 
+
+Parallel Testing:
+Advantages:
+-----------
+1. Wide Test Coverage
+2. Reduce Testing Time
+3. Cost Effectiveness
+4. Optimize CI and Delivery
+5. Continuous Testing
+
+Best Practices:
+-------------
+1. Generate Independent Test Cases
+2. Parallel Testing Using Cloud-Based Selenium Grid
+3. Avoid Hard Code values
+4. Prevent Dependencies Between Selenium test automation Cases
+5. You Need To Manage Your Test Data Efficiently
+
+When to use:
+----------------
+1. Financial applications where they are identical
+2. when testing an app across different browsers, os and devices
+3. when importing legacy data form one system to another 
+4. when a comepany moving from old system to new system
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+Selenium Webdriver ---- Browser Automation Framework
+----------------------------------------------------
+Selenium 2 (aka. Selenium Webdriver)​
+Can control a browser natively either locally or on other computers, using a programming language and testing framework
+
+WebDriver W3C Protocol in Selenium 4   but in Selenium 3 JSON Wire Protocol
+
+Its four components:
+	1. API --- set of commands to manipulate wevbdriver
+	2. Library --- set of apis
+	3. Driver --- interpreter the browser
+	4. Framework --- Test framework
+Selenium is a powerful test automation framework that is not only instrumental in web automation testing 
+but also helps in accelerating the overall software release via integration with popular CI/CD tools like Jenkins, TeamCity, GitLab CI, and more. 
+The only downside about Selenium is that it cannot be used for automation desktop applications.
+
+Selenium versions prior to Selenium 4 were using the JSON Wire Protocol for communicating between the client and server.
+ However, JSON Wire protocol is retiring in Selenium 4, as WebDriver W3C protocol is used in the Selenium 4 framework.
+ This essentially means that your cross browser tests would be more stable (or less flaky) when the tests are performed on the Selenium 4 Grid.
+
+-------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+WAIT:
+Types of Expected Conditions:
+-------------------------------------
+visibilityOfElementLocated()- Verifies if the given element is present or not
+alertIsPresent()- Verifies if the alert is present or not.
+elementToBeClickable()- Verifies if the given element is present/clickable on the screen
+textToBePresentInElement()- Verifies the given element have the required text or not
+titlels()- Verify the condition wait for a page that has a given title
+
+--------------------------------------------------------------------------------------------------------------------------------------------------------------------
+Black box testing and Software Testing Life Cycle:
+
+1. Requirement gathering  
+2. Test plan and Analysis  ---Testing type determined, also previous project referred for this project risks and mitigation
+3. Design  ---- Test scripts written according to software requirement document
+4. Execution   ---- execute tehe test cases prepared, bugs any fixed and retested
+
+
+
+------------------------------------------
+
+16 Selenium Best Practices For Efficient Test Automation:
+----------------------------------------------------------------
+
+1. Avoid Blocking Sleep Calls
+2. Name the Test Cases & Test Suites Appropriately
+3. Set the Browser Zoom Level to 100 percent
+4. Maximize the Browser Window
+5. Choose the Best-Suited Web Locator
+6. Create a Browser Compatibility Matrix for Cross Browser Testing
+7. Implement Logging and Reporting
+8. Use Design Patterns and Principles i.e. Page Object Model (POM)
+9. Use BDD Framework with Selenium
+10. Follow a Uniform Directory Structure
+11. Use Data-Driven Testing or Parameterization
+Advantages of Data Driven Testing:
+----------------------------------
+its easier to maintain since the test logic is logically separated from the data used for testing the logic. 
+it is a preferred choice for iteratively testing the application (or web product) against a large data set.
+
+Types of Parameterization in TestNG:
+-------------------------------------------
+So primarily we can achieve parameterization in TestNG in two ways.
+
+Using “Parameters annotation” and TestNG XML file.
+Using “DataProvider annotation”.
+
+12. Do Not Use a Single Driver Implementation
+13. Come Up with Autonomous Test Case Design
+14. Use Assert and Verify in Appropriate Scenarios
+15. Avoid Code Duplication (or Wrap Selenium Calls)
+16. Leverage Parallel Testing in Selenium
+
+-------------------------------------------------------------------------------------------------------------------------------------------------------------------
+API:
+----
+   decouples the consuming application from the infrastructure providing the service.
+   offer security by design because their position as middleman facilitates 
+the abstraction of functionality between two systems
+   for human--- user interface... 
+   for applications -----API
+
+API as a middleman... 
+----------------------
+1. Client application request---> API
+2. API call(request with unique token as authorization credential for security) to-----> Web Server(Web Service by the other application )
+3. Web Server response to ----> API
+4. API response to -----> Client Application
+
+for enhanced security: along with authorization credentials, it use while exchange cookies, http header
+
+
+Examples:
+------------
+1. Universal login using google account or facebook or twitter accounts
+This convenient feature allows any website to leverage an API from one of the more popular services to quickly authenticate the user, saving them the tim
+
+2. Third party payment processing
+For example, consider an API offered by a payment processing service.
+Customers can enter their card details on the frontend of an application for an ecommerce store. T
+The payment processor doesn’t require access to the user’s bank account; 
+the API creates a unique token for this transaction and includes it in the API call to the server.
+This ensures a higher level of security against potential hacking threats.
+
+3. Google maps
+ Through geolocation and multiple data layers, you can communicate with the Maps API when plotting travel
+ routes or tracking items on the move, such as a delivery vehicle.
+
+4. Travel booking
+This service is made possible through APIs that provide application users with access to the latest information 
+about availability from hotels and airlines.
+
+Types of APIs:
+----------------
+1. Open --- can access with http protocol.
+2. Internal ---  private APIs aren't available for users outside of the company and are instead intended to improve productivity
+ and communication across different internal development teams.
+3. Partner --- developers can access these APIs in self-service mode 
+through a public API developer portal.
+4. Composite --- combine multiple data or service APIs. These services allow developers to access several
+endpoints in a single call. Composite APIs are useful in microservices architecture where performing a
+ single task may require information from several sources.
+
+
+Tpes of API Protocols:
+----------------------
+1.SOAP
+2.XML--RPC(Remote Procedure Calls)
+3.JSON--RPC
+4.REST
+------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+Performance testing objective:
+--------------------------------
+to evaluate--- 
+1.data transfer velocity                 
+2.maximum concurrent users                                   all 3 ---- request related
+3.network bandwidth usage
+
+4. workload efficiency
+5. processing speed         1st 2---processing               all 3 ----  processing related
+6. memory utilization       3rd ---- memory
+
+7. application output                         
+8. command response time                                     all 2 ---- response related
+--------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+Selenium API:
+-------------
+API stands for Application User Interface. Primary task of an API is to interact with a data source
+ and move the data from source to target without exposing any functionalities to the user. 
+For instance, when you upload a youtube video to fb, you are essentially using FB apis which are 
+exposed to Youtube.
+
+APIs does not have a UI since they are just for data transfer purpose or inculcating business 
+logics when used inside the same application,which is why you cannot teat API with Selenium.
+
+Try to use below tools for API:
+
+Karate
+Rest assured
+Soap UI
+There are a lot of topics that you should readin order to know more about APIs. 
+I ll point out a few and you can read about it.
+
+Soap APIs
+REST APIs
+HTTP Protocols
+Monolithic architecture
+Microservices architecture
+------------------------------------------------------------------------------------------------------
+
+Selenium is a magnificent open-source testing tool used for both functional and regression testing of web applications.
+
+1. Tests can run on any operating system like Windows, Android, Linux, IOS, and Mac.
+2. It can be integrated with many other frameworks like JUnit, TestNG, and NUnit
+3. It supports various programming languages including Java, Ruby, Python, Perl, and PHP
+
+Disadvantages of Selenium:
+1. Selenium does not support Desktop and Mobile testing services as it is suitable only for web applications
+2. With the release of a new version of Selenium libraries, an earlier test may get unstable
+3. It is incomplete as a testing framework due to missing features like CI integration, Reporting, Parallel-execution, Assertions, etc
+
+There are many other alternatives that can be opted in alternate to Selenium for Web Browser automated tests due to its disadvantages, Some of them listed below:
+1). Protractor
+2). Cucumber
+3). Katalon Studio
+4). Robot Framework
+5). Cypress
+
+Protractor is an Angular-friendly framework with Javascript for end-to-end testing:
+1) Its supports both Angular and non-Angular UIs
+2). It provides better productivity in comparison to Selenium due to Protractor more high-level coverage
+3). Test runs in multiple browsers simultaneously
+4). Provide utilities for Angular UIs (e.g. locators for ng-bind, ng-repeat, ng-modal, etc)
+
+Cucumber is a widely used behavior-driven open-source development tool with the BDD framework:
+1). Due to the use of BDD, technical and non-technical members can understand the tests.
+2). Cucumber merges functional requirements and documentation into single test scripts.
+3). Updated continuously and with large support of the awesome community.
+
+Katalon Studio is a free open-source tool with paid support
+1). Visual testing is performed with a built-in plugin
+2). Katalon recorder for automation is more stable then Selenium IDE
+3). It has built-in assertions for more robustness of tests
+
+Robot Framework is an open-source automation framework for acceptance test-driven development (ATDD)and acceptance testing:
+1). This framework is an application, platform, technology and OS independent
+2). Features that make it a commendable framework are a high-level architecture, detailed logs, generic test libraries, and test data editor, etc
+3). Tests are written in English words instead of code that make it more simpler to understand
+
+Cypress is an open-source test automation framework that supports present development tools, it is similar to JavaScript as it uses Mocha and Chai:
+1). It can be installed on multiple Operating Systems like Mac, Windows, and Linus
+2). Many features like reloading the changes in real-time, monitoring the test files automatically that overpower selenium
+3). It executes the commands inside the browser whereas selenium do it outside the browser remotely
+-----------------------------------------------------------------------------------------------------------------------------------------------------
+ the web browser creates a DOM of the webpage when the page is loaded. The DOM model is created as a tree of objects like this
+
+-------------------------------------------------------------------------------------------------------------------------------
+Possible Expected Conditions includes but is not restricted to​
+
+Element is present​
+
+Element is visible​
+
+Element is clickable​
+
+Element to be selected ​
+
+Alert is present​
+
+Frame is available​
+
+Text is present​
+
+Expected Window title 
+-----------------------------------------------------------------------------
+TestNG is a testing framework designed to simplify a broad range of testing needs, from unit testing to integration testing. Writing a test is typically a three-step process:​
+
+​
+
+Write the business logic of your test and insert TestNG annotations in your code.​
+
+Add the information about your test (e.g. the class name,  the groups you wish to run, etc...) in a testng.xml file or in build.xml.​
+
+Run TestNG.​
+---------------------------------------------------------------------------------------------------
+TestNG handles dependency between test cases.​
+
+If one test case failure causes the failure of a group of test cases it skips that group and executes the rest of the test suite. The group that has dependency on the failed test cases is reported as skipped NOT failed.​
+
+
+In TestNG groups can be defined. Groups are specific subsets of the test suite. We can choose to run only specific subset of the test suite say database related test cases instead of running the entire test suite. ​
+
+
+TestNG supports parameterization for objects​
+
+<suite>, <test>, <class>, methods 
+--------------------------------------------------------------------------------------
+TestNG allows you to perform sophisticated groupings of test methods.​
+two categories:
+1. checkin tests
+2. functional tests
+
+ Not only can you declare that methods belong to groups, but you can also specify groups that contain other groups. ​
+
+Then TestNG can be invoked and asked to include a certain set of groups (or regular expressions) while excluding another set.  ​
+
+This gives you maximum flexibility in how you partition your tests and doesn't require you to recompile anything if you want to run two different sets of tests back to back
+------------------------------------------------------------------------------------------------------------------------------------
+
+Dependencies:
+1. Hard dependencies(depends on methods should run and succeed only then this method run, else skipped)
+2. Soft dependencies(though depends on methods fail, it will run by giving alwaysrun=true in annotation attribute)
+
+Failed Tests:
+Every time tests fail in a suite, TestNG creates a file called testng-failed.xml 
+in the output directory. This XML file contains the necessary information to rerun only
+ these methods that failed, allowing you to quickly reproduce the failures without having to
+ run the entirety of your tests. 
+
+TESTG LISTENERS:
+here are several interfaces that allow you to modify TestNG's behavior. 
+These interfaces are broadly called "TestNG Listeners". Here are a few listeners:
+
+IAnnotationTransformer (doc, javadoc) ​
+
+IAnnotationTransformer2 (doc, javadoc) ​
+
+IHookable (doc, javadoc) ​
+
+IInvokedMethodListener (doc, javadoc) ​
+
+IMethodInterceptor (doc, javadoc) ​
+
+IReporter (doc, javadoc) ​
+
+ISuiteListener (doc, javadoc) ​
+
+ITestListener (doc, javadoc) 
+
+SELENIUM GRID:
+distributed and parallel test execution environment
+saves time
+hub- node
+hub to have all data about the nodes
+different browser, different platform, different languages
